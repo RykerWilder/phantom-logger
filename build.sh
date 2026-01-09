@@ -3,7 +3,14 @@
 # Main Python script name
 SCRIPT_NAME="main.py"
 
-APP_NAME="my_app"
+# Ask user for executable name
+read -p "Enter the name for the executable: " APP_NAME
+
+# Use default name if input is empty
+if [ -z "$APP_NAME" ]; then
+    APP_NAME="cache.log"
+    echo "No name provided. Using default: $APP_NAME"
+fi
 
 # PyInstaller options
 ONEFILE="--onefile"  # Creates a single executable file
