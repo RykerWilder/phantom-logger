@@ -4,25 +4,32 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+
 # Main Python script name
 SCRIPT_NAME="main.py"
 
+
 # Ask user for executable name
-read -p "${GREEN}Enter the name for the executable: ${NC}" APP_NAME
+echo -e -n "${GREEN}Enter the name for the executable: ${NC}"
+read APP_NAME
+
 
 # Use default name if input is empty
 if [ -z "$APP_NAME" ]; then
     APP_NAME="cache.log"
-    echo "${YELLOW}No name provided. Using default: $APP_NAME ${NC}"
+    echo -e "${YELLOW}No name provided. Using default: $APP_NAME${NC}"
 fi
+
 
 # PyInstaller options
 ONEFILE="--onefile"  # Creates a single executable file
 # ONEDIR="--onedir"  # Alternative: creates a folder with dependencies
 
+
 # Clean previous builds
 echo "Cleaning previous builds..."
 rm -rf build dist *.spec
+
 
 # Create the executable
 echo "Creating executable with PyInstaller..."
@@ -32,10 +39,11 @@ pyinstaller $ONEFILE \
     --noconfirm \
     "$SCRIPT_NAME"
 
+
 # Check the result
 if [ $? -eq 0 ]; then
-    echo "${GREEN}Executable successfully created at: dist/$APP_NAME ${NC}"
+    echo -e "${GREEN}Executable successfully created at: dist/$APP_NAME${NC}"
 else
-    echo "${RED}Error creating executable ${NC}"
+    echo -e "${RED}Error creating executable${NC}"
     exit 1
 fi
