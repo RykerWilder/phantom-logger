@@ -1,10 +1,10 @@
-# Phantom Logger
+# Phantom Logger
 
 A cross-platform keylogger written in Python that captures keyboard input and stores it in hidden system directories. This tool demonstrates keystroke logging capabilities across Windows, macOS, and Linux systems.
 
-⚠️ Educational Purpose Only: This tool is designed for cybersecurity education and authorized penetration testing. Unauthorized use of keyloggers is illegal and unethical. Always obtain explicit permission before deploying this software.
+**⚠️ Educational Purpose Only: This tool is designed for cybersecurity education and authorized penetration testing. Unauthorized use of keyloggers is illegal and unethical. Always obtain explicit permission before deploying this software.**
 
-## Platform-Specific Log Locations
+## Platform-Specific Log Locations
 
 Windows: %LOCALAPPDATA%\Microsoft\Event Viewer\ExternalLogs.dat
 
@@ -40,5 +40,5 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Disclaimer
+## Disclaimer
 The authors and contributors are not responsible for any misuse of this software. Users assume all legal and ethical responsibility for their actions.
