@@ -38,8 +38,7 @@ if [ -z "$APP_NAME" ]; then
     echo -e "${YELLOW}No name provided. Using default: $APP_NAME${NC}"
 fi
 
-# Ask for Telegram credentials
-echo -e "${GREEN}=== Telegram Configuration ===${NC}"
+# Telegram credentials
 
 echo -e -n "${GREEN}Enter your Telegram Bot Token: ${NC}"
 read BOT_TOKEN
