@@ -1,8 +1,29 @@
 #!/bin/bash
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+WHITE='\033[0;37m'
 NC='\033[0m'
+
+echo -e "${WHITE}                   _.-, 
+              _ .-'  / .._
+           ${BLUE}.-:'${WHITE}/ - - \ ${BLUE}:::::-.
+         ${BLUE}.:::${WHITE} '  e e  ' ${BLUE}'-::::.${NC}       
+        ${BLUE}::::'${WHITE}(    ^    )${BLUE}_.::::::${NC}      
+       ${BLUE}::::.'${WHITE} '.  o   .'${BLUE}.::::'${WHITE}.'/_
+   ${WHITE}.  ${BLUE}:::.'${WHITE}       -${BLUE}   .::::'${WHITE}_   _.${BLUE}:
+ ${WHITE}.-''---' .'|      ${BLUE}.::::'${WHITE}   '''${BLUE}::::
+${WHITE}'.${BLUE} ..-:::'${WHITE}  |    ${BLUE}.::::'${WHITE}        ${BLUE}::::
+${WHITE} '.' ${BLUE}::::${WHITE}    \ ${BLUE}.::::'${WHITE}          ${BLUE}::::
+      ${BLUE}::::   .::::'${WHITE}           ${BLUE}::::
+       ${BLUE}::::.::::'${WHITE}._          ${BLUE}::::
+        ${BLUE}::::::' /${WHITE}  '-      ${BLUE}.::::
+         ${BLUE}'::::-/__${WHITE}      ${BLUE}.-::::'
+           ${BLUE}'-::::::::::::::-'   ${WHITE}Created by: ${BLUE}RykerWilder
+               '''::::'''${NC}"
+
 
 # Main Python script name
 SCRIPT_NAME="main.py"
