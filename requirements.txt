@@ -1,4 +1,10 @@
 altgraph==0.17.5
+anyio==4.12.1
+certifi==2026.1.4
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.11
 macholib==1.16.4
 packaging==25.0
 pyinstaller==6.17.0
@@ -9,5 +15,7 @@ pyobjc-framework-ApplicationServices==12.1
 pyobjc-framework-Cocoa==12.1
 pyobjc-framework-CoreText==12.1
 pyobjc-framework-Quartz==12.1
+python-dotenv==1.2.1
+python-telegram-bot==22.5
 setuptools==80.9.0
 six==1.17.0
