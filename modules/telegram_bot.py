@@ -17,12 +17,10 @@ class TelegramBot:
         
         try:
             bot = Bot(token=self.bot_token)
-            
-            # Crea versione formattata con estensione .txt
+
             formatted_path = self.log_file + '.formatted.txt'
             LogFormatter.format_log(self.log_file, formatted_path)
-            
-            # Invia il file formattato se esiste, altrimenti quello grezzo
+
             file_to_send = formatted_path if os.path.exists(formatted_path) else self.log_file
             
             with open(file_to_send, 'rb') as file:
@@ -31,8 +29,7 @@ class TelegramBot:
                     document=file,
                     caption=f"Log file - {platform.system()}"
                 )
-            
-            # Rimuovi il file formattato temporaneo
+
             if os.path.exists(formatted_path):
                 os.remove(formatted_path)
             
