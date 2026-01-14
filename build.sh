@@ -55,16 +55,11 @@ echo -e -n "${GREEN}Enter your Telegram Chat ID: ${NC}"
 read CHAT_ID
 
 
-echo -e -n "${GREEN}Enter timeout in seconds (leave empty for infinite): ${NC}"
-read TIMEOUT_SECONDS
-
-
 # Create .env file
 echo -e "${GREEN}Creating .env file...${NC}"
 cat > .env << EOF
 BOT_TOKEN=$BOT_TOKEN
 CHAT_ID=$CHAT_ID
-TIMEOUT_SECONDS=$TIMEOUT_SECONDS
 EOF
 
 
