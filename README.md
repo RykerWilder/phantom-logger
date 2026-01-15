@@ -7,6 +7,7 @@ A cross-platform keylogger written in Python that captures keyboard input and se
 ## Telegram Bot Commands
 `/logs`: send log in .txt format
 `/status`: send message to check Phantom Logger status
+`/kill`: destroy Phantom Logger
 
 ## Platform-Specific Log Locations
 
