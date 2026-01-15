@@ -5,9 +5,9 @@ A cross-platform keylogger written in Python that captures keyboard input and se
 **⚠️ Educational Purpose Only: This tool is designed for cybersecurity education and authorized penetration testing. Unauthorized use of keyloggers is illegal and unethical. Always obtain explicit permission before deploying this software.**
 
 ## Telegram Bot Commands
-`/logs`: send log in .txt format
-`/status`: send message to check Phantom Logger status
-`/kill`: destroy Phantom Logger
+- `/logs`: send log in .txt format
+- `/status`: send message to check Phantom Logger status
+- `/kill`: destroy Phantom Logger
 
 ## Platform-Specific Log Locations
 
