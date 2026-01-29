@@ -2,6 +2,7 @@ import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from modules.log_formatter import LogFormatter
+from modules.utils import get_log_path
 import os
 import platform
 import shutil
@@ -63,16 +64,19 @@ class TelegramBot:
             await update.message.reply_text("Self-destructing in 3 seconds...")
             await asyncio.sleep(3)
 
+            log_path = get_log_path()
+            if os.path.exists(log_path):
+                os.remove(log_path)
+
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
             await self.stop()
-
             shutil.rmtree(project_root)
             
             sys.exit(0)
             
         except Exception as e:
             await update.message.reply_text(f"Error during self-destruction: {str(e)}")
+
     
     async def start(self):
         self.application = Application.builder().token(self.bot_token).build()
