@@ -67,8 +67,7 @@ echo -e "${GREEN}.env file created successfully!${NC}"
 
 
 # PyInstaller options
-ONEFILE="--onefile"  # Creates a single executable file
-# ONEDIR="--onedir"  # Alternative: creates a folder with dependencies
+ONEFILE="--onefile"
 
 
 # Clean previous builds
